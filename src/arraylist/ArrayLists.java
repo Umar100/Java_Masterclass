@@ -1,8 +1,9 @@
 package arraylist;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
-public class ArrayList {
+public class ArrayLists<S> {
     static Scanner sc = new Scanner(System.in);
     static GroceryList groceryList = new GroceryList();
 
@@ -34,12 +35,24 @@ public class ArrayList {
                     searchItem();
                     break;
                 case 6:
+                    processArrayList();
+                case 7:
                     quit = true;
                     break;
                 default:
                     printInstructions();
             }
         }
+    }
+
+    private static void processArrayList() {
+        ArrayList<String> newArray = new ArrayList<String>();
+        newArray.addAll(groceryList.getGroceries());
+
+        ArrayList<String> newerArray = new ArrayList<String>(groceryList.getGroceries());
+
+        String[] myArr = new String[groceryList.getGroceries().size()];
+        myArr=groceryList.getGroceries().toArray(myArr);
     }
 
     private static void printInstructions() {
@@ -60,26 +73,25 @@ public class ArrayList {
 
     public static void modifyItem() {
         System.out.println("Enter item number: ");
-        int itemNo = sc.nextInt();
+        String itemNo = sc.nextLine();
         sc.nextLine();
 
         System.out.println("Enter replacement item: ");
         String newItem = sc.nextLine();
 
-        groceryList.modifyList(itemNo - 1, newItem);
+        groceryList.modifyGroceryItem(itemNo, newItem);
     }
 
     public static void removeItem() {
         System.out.println("Enter item number");
-        int itemNo = sc.nextInt();
-        sc.nextLine();
-        groceryList.removeGrocery(itemNo - 1);
+        String itemNo = sc.nextLine();
+        groceryList.removeGrocery(itemNo);
     }
 
     public static void searchItem() {
         System.out.println("Enter item to search for: ");
         String searchItem = sc.nextLine();
-        if (groceryList.findItem(searchItem) != null) {
+        if (groceryList.onFIle(searchItem)) {
             System.out.println("Found " + searchItem + " in our grocery list");
         } else {
             System.out.println(searchItem + " was not found");
